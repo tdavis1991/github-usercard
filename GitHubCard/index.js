@@ -24,6 +24,16 @@
           user, and adding that card to the DOM.
 */
 
+axios.get('https://api.github.com/users/tdavis1991')
+.then(response => {
+  let container = document.querySelector('.cards');
+  container.append(createCard(response.data))
+  console.log(response)
+  console.log(createCard(response.data))})
+.catch(error => {
+  console.error(error)
+})
+
 const followersArray = [];
 
 /* Step 3: Create a function that accepts a single object as its only argument,
@@ -53,3 +63,54 @@ const followersArray = [];
   luishrd
   bigknell
 */
+// let content = ;
+// console.log(content);
+
+const createCard = function(user) {
+  let card = document.createElement('div');
+  card.classList.add('card');
+
+  let image = document.createElement('img');
+  image.src = user['avatar_url'];
+
+  let cardInfo = document.createElement('div');
+  cardInfo.classList.add('card-info');
+
+  let name = document.createElement('h3');
+  name.classList.add('name');
+  name.textContent = user.name || 'See Username'
+
+
+  let username = document.createElement('p');
+  username.classList.add('username');
+  username.textContent = user.login;
+
+  let location = document.createElement('p');
+  location.textContent = `Location: ${user.location}` || 'Not Available'
+
+  let profile = document.createElement('p');
+
+  let followers = document.createElement('p');
+  followers.textContent = `Followers: ${user.followers}`
+
+  let following = document.createElement('p');
+
+  let bio = document.createElement('p');
+
+  cardInfo.appendChild(name);
+  cardInfo.appendChild(username);
+  cardInfo.appendChild(location);
+  cardInfo.appendChild(profile);
+  cardInfo.appendChild(followers);
+  cardInfo.appendChild(following);
+  cardInfo.appendChild(bio);
+
+  card.appendChild(image);
+  card.appendChild(cardInfo);
+
+  const cardSection = document.querySelector('.cards');
+
+
+  return card
+}
+// console.log(createCard(re))
